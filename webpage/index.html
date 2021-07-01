@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="css\style.css">
+    <script src="library\jquery-3.6.0.js"></script>
+    <script src="library\jquery.validate.js"></script>
+    <script src="js\global.js"></script>
+    <script src="js\auth.js"></script>
+    <script src="js\database.js"></script>
+    <script src="js\databaseDAL.js"></script>
+
+    <title>Vehicle Entry</title>
+  </head>
+  <body style="background-color: bisque;">
+ 
+    <div id="homepage">
+      <h1>Car Lookup</h1>
+      
+      <button type="button" id="enterFormButton" name="enterFormButton">New Search</button><button type="button" id="searchHistoryButton" name="searchHistoryButton">Search History</button><button type="button" id="clear" name="clear">Clear History</button>
+
+      <div id="enter">
+        <form id="infoForm">
+          <fieldset>
+            <legend>New Entry</legend>
+            <label for="sellerName">Seller Name:</label>
+            <input type="text" id="sellerName" name="sellerName">
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address">
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city">
+
+            <label for="province">Province:</label>
+            <input type="text" id="province" name="province">
+
+            <label for="postCode">Postal Code:</label>
+            <input type="text" id="postCode" name="postCode">
+
+            <label for="phoneNum">Phone Number:</label>
+            <input type="text" id="phoneNum" name="phoneNum">
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email">
+            
+            <fieldset id="innerSet">
+              <legend>Car Info</legend>
+
+              <label for="year">Year:</label>
+              <input type="number" id="year" name="year">
+
+              <label for="make">Make:</label>
+              <input type="text" id="make" name="make">
+
+              <label for="model">Model:</label>
+              <input type="text" id="model" name="model">
+
+            </fieldset>
+            
+          </fieldset>
+
+          <button type="button" id="submitEntry" name="submitEntry">Submit</button>
+          <div style="margin-top: 10px;">
+            <a href="" id="carURL"></a>
+          </div>
+        </form>
+
+      </div>
+
+      <div id="searchDiv">
+
+        <div id="search">
+          <ul id="searchList">
+
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>
