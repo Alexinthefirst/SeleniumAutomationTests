@@ -1,146 +1,132 @@
-// This web app runs on HTML and jQuery!
+jQuery.validator.addMethod("emailcheck",
+    function(value, element){
+        var regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        return this.optional(element) || regex.test(value);
+    },
+    "Email must be a valid email.");
 
-/*
- * PROG 2070
- *
- * Joshua Arnott 
- * April 6th, 2021
- * 
- */
+jQuery.validator.addMethod("postalcode",
+    function(value, element){
+        var regex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+        return this.optional(element) || regex.test(value);
+    },
+    "Email must be a valid email.");
 
-// Stores if forms are shown
-var isEnterShown = false;
-var isSearchShown = false;
+jQuery.validator.addMethod("validphone",
+    function(value, element){
+        var regex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+        return this.optional(element) || regex.test(value);
+    },
+    "Email must be a valid email.");
 
-// Displays all searches stored in DB
-function showAllSearches() {
-    var options = [];
-
-    function callback(tx, results) {
-        var htmlCode = "";
-        for (var i = 0; i < results.rows.length; i++) {
-            var row = results.rows[i];
-
-            htmlCode += "<fieldset id='result'><li>" +
-                "<h2>Year: " + row['year'] +
-                "<h2>Make: " + row['make'] +
-                "<h2>Model: " + row['model'] + "</h1>" +
-                "<h2>Seller Name: " + row['sellerName'] + "</h1>" +
-                "<h3>City: " + row['city'] + "</h3>" +
-                "<h3>Province: " + row['province'] + "</h3>" +
-                "<h3>Postal Code: " + row['postCode'] + "</h3>" +
-                "<h3>Phone Number: " + row['phoneNum'] + "</h3>" +
-                "<h3>Email: " + row['email'] + "</h3>" +
-                "<a href='"+ row["url"] +"'>" + row["year"] + " " + row["make"] + " " + row["model"] + "</a>" +
-                "</a></li></fieldset>";
-        }
-        var lv = $("#searchList");
-        lv = lv.html(htmlCode);
-        //lv.listview("refresh"); // very important
-    }
-
-    Search.selectAll(options, callback);
+function doValidate() {
+    var form = $("#infoForm");
+    form.validate({
+       rules: {
+           "days": {
+               required: true,
+               minlength: 1
+           },
+           fName: {
+               required: true
+           },
+           lName: {
+               required: true
+           },
+           city: {
+               required: true
+           },
+           province: {
+               required: true
+           },
+           code: {
+               required: true,
+               postalcode: true
+           },
+           phone: {
+               required: true,
+               validphone: true
+           },
+           email: {
+               required: true,
+               emailcheck: true
+           },
+           people: {
+               required: true
+           }
+       },
+       messages: {
+           "days": {
+               required: "Atleast one day is required."
+           },
+           fName: {
+               required: "First name is required."
+           },
+           lName: {
+               required: "Last name is required."
+           },
+           city: {
+               required: "City is required."
+           },
+           province: {
+               required: "Province is required."
+           },
+           code: {
+               required: "Postal Code is required.",
+               postalcode: "Postal Code must be valid."
+           },
+           phone: {
+               required: "Phone number is required.",
+               validphone: "Phone number must be valid"
+           },
+           email: {
+               required: "Email is required.",
+               emailcheck: "Email must be valid"
+           },
+           people: {
+               required: "Number of participants is required."
+           }
+       }
+    });
+    return form.valid();
 }
 
-// Hides and shows the entry form
-function showEnterForm(){
-    if (isEnterShown){
-        $("#enter").hide();
-        isEnterShown = false;
-    } else {
-        $("#enter").show();
-        isEnterShown = true;
-    }
-    if (isSearchShown){
-        $("#search").hide();
-        isSearchShown = false;
-    }
-}
-
-// Hides and shows the search form
-function showSearchForm(){
-    if (isSearchShown){
-        $("#search").hide();
-        isSearchShown = false;
-    } else {
-        $("#search").show();
-        isSearchShown = true;
-        showAllSearches();
-    }
-    if (isEnterShown){
-        $("#enter").hide();
-        isEnterShown = false;
-    }
-}
- 
-// Validates and submits the entry form
-function submitEntryForm(){
-    doValidate();
+function submit() {
     if (doValidate()){
-
-        var sellerName = $("#sellerName").val();
-        var city = $("#city").val();
-        var province = $("#province").val();
-        var postCode = $("#postCode").val();
-        var phoneNum = $("#phoneNum").val();
-        var email = $("#email").val();
-        var year = $("#year").val();
-        var make = $("#make").val();
-        var model = $("#model").val();
-
-        var string = year + " " + make + " " + model;
-        var url = "http://www.jdpower.com/cars/" + make + "/" + model + "/" + year + "";
-
-        var options = [sellerName, city, province, postCode, phoneNum, email, year, make, model, url];
-
-        console.info(options);
-
-        $("#carURL").text(string);
-        $("#carURL").attr("href", url);
-
-        Search.insert(options);
-    }
-}
-
-// Clears the database
-function clearDB(){
-    DB.dropTables();
-    DB.createTables();
-}
-
-// Initialize the Database
-function initDB(){
-    try{
-        console.log("Creating DB...");
-        DB.createDatabase();
-        if (db) {
-            console.info("Creating tables...");
-            DB.createTables();
-            console.info("Table created.")
+        // Check days
+        // Both Checked
+        if (document.getElementById("dayOne").checked == true && document.getElementById("dayTwo").checked == true){
+            localStorage.setItem("days", 3);
+            //Day One is checked
+        } else if (document.getElementById("dayOne").checked == true){
+            localStorage.setItem("days", 1);
+            //Day Two is checked
         } else {
-            console.error("Cannot create tables: DB does not exist.");
+            localStorage.setItem("days", 2);
         }
-    } catch(e){
-        console.error("Fatal Error in initDB().");
+        // Store all data in localstorage
+        localStorage.setItem("fname", $("#fName").val());
+        localStorage.setItem("lname", $("#lName").val());
+        localStorage.setItem("city", $("#city").val());
+        localStorage.setItem("province", $("#province").val());
+        localStorage.setItem("code", $("#code").val());
+        localStorage.setItem("phone", $("#phone").val());
+        localStorage.setItem("email", $("#email").val());
+        localStorage.setItem("people", $("#people").val());
+
+        location.href = "success.html";
+
+    } else {
+
     }
 }
 
-// Initialize the events and DB
-function init(){
-    initDB();
-    console.info("Up and loaded.");
-    $("#enter").hide();
-    $("#search").hide();
 
-    $("#enterFormButton").on("click", showEnterForm);
-    $("#submitEntry").on("click", submitEntryForm);
 
-    $("#searchHistoryButton").on("click", showSearchForm);
-    $("#clear").on("click", clearDB);
-
+function init() {
+    $("#submit").on("click", submit);
 }
 
-// Start Initialization once document is loaded
-$(document).ready(function (){
+$(document).ready(function () {
     init();
 });

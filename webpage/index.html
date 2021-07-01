@@ -1,85 +1,75 @@
+<!--
+Mobile web development 
+Template for General purpose html5 page with JQuery Mobile
+Created by: Sabbir Ahmed
+email:      sahmed@conestogac.on.ca
+-->
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
+    <head>
 
-    <link rel="stylesheet" href="css\style.css">
-    <script src="library\jquery-3.6.0.js"></script>
-    <script src="library\jquery.validate.js"></script>
-    <script src="js\global.js"></script>
-    <script src="js\auth.js"></script>
-    <script src="js\database.js"></script>
-    <script src="js\databaseDAL.js"></script>
 
-    <title>Vehicle Entry</title>
-  </head>
-  <body style="background-color: bisque;">
- 
-    <div id="homepage">
-      <h1>Car Lookup</h1>
-      
-      <button type="button" id="enterFormButton" name="enterFormButton">New Search</button><button type="button" id="searchHistoryButton" name="searchHistoryButton">Search History</button><button type="button" id="clear" name="clear">Clear History</button>
 
-      <div id="enter">
-        <form id="infoForm">
-          <fieldset>
-            <legend>New Entry</legend>
-            <label for="sellerName">Seller Name:</label>
-            <input type="text" id="sellerName" name="sellerName">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Booking</title>
 
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address">
+        <script src="js/lib/jquery-2.1.4.js"></script>
+        <script src="js/lib/jquery.mobile-1.4.5.js"></script>
+        <script src="js/lib/jquery.validate.js"></script>
+        <script src="js/success.js"></script>
+        <script src="js/global.js"></script>
+        <link rel="stylesheet" href="css/mystyle.css">
 
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city">
+    </head>
 
-            <label for="province">Province:</label>
-            <input type="text" id="province" name="province">
+    <!--HOME PAGE-->
+    <div id="HomePage" data-role="page">
+        <header data-role="header" data-theme="b" data-position="fixed">
+            <h1 style="text-align: center"> Booking </h1>
+        </header>
 
-            <label for="postCode">Postal Code:</label>
-            <input type="text" id="postCode" name="postCode">
+        <div id="HomeContent" data-role="content" style = "text-align: center">
+            <div>
+                <form id="infoForm">
+                    <fieldset>
+                        <legend>Booking Info</legend>
 
-            <label for="phoneNum">Phone Number:</label>
-            <input type="text" id="phoneNum" name="phoneNum">
+                        <label>Days:</label>
+                        <label for="dayOne">Day 1: ($350)</label>
+                        <input type="checkbox" id="dayOne" name="days">
+                        <label for="dayTwo">Day 2: ($450)</label>
+                        <input type="checkbox" id="dayTwo" name="days">
+                        <hr>
 
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email">
-            
-            <fieldset id="innerSet">
-              <legend>Car Info</legend>
+                        <label>Info:</label>
+                        <br>
+                        <label>First Name:</label>
+                        <input type="text" id="fName" name="fName">
+                        <label>Last Name:</label>
+                        <input type="text" id="lName" name="lName">
+                        <label>City:</label>
+                        <input type="text" id="city" name="city">
+                        <label>Province:</label>
+                        <input type="text" id="province" name="province">
+                        <label>Postal Code:</label>
+                        <input type="text" id="code" name="code">
+                        <label>Phone Number:</label>
+                        <input type="text" id="phone" name="phone">
+                        <label>Email:</label>
+                        <input type="text" id="email" name="email">
+                        <label>Number of participants:</label>
+                        <input type="number" id="people" name="people">
 
-              <label for="year">Year:</label>
-              <input type="number" id="year" name="year">
 
-              <label for="make">Make:</label>
-              <input type="text" id="make" name="make">
 
-              <label for="model">Model:</label>
-              <input type="text" id="model" name="model">
-
-            </fieldset>
-            
-          </fieldset>
-
-          <button type="button" id="submitEntry" name="submitEntry">Submit</button>
-          <div style="margin-top: 10px;">
-            <a href="" id="carURL"></a>
-          </div>
-        </form>
-
-      </div>
-
-      <div id="searchDiv">
-
-        <div id="search">
-          <ul id="searchList">
-
-          </ul>
+                    </fieldset>
+                </form>
+                <button type="button" id="submit">Book</button>
+            </div>
         </div>
 
-      </div>
+        <footer data-role="footer" data-theme="b" data-position="fixed">
 
+        </footer>
     </div>
-
-  </body>
-</html>
